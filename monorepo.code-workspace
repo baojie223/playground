@@ -1,0 +1,16 @@
+{
+  "folders": [
+    {
+      "name": "playground",
+      "path": "packages/playground"
+    },
+    {
+      "name": "redux-playground",
+      "path": "packages/redux-playground"
+    },
+    {
+      "name": "monorepo",
+      "path": "."
+    }
+  ]
+}

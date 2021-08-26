@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "outDir": "./lib",
+    "jsx": "preserve",
+    "target": "ESNext",
+    "strict": false
+  }
+}

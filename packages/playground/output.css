@@ -1,0 +1,12 @@
+.a {
+  color: red;
+}
+.a.b {
+  color: yellow;
+}
+.a.b .c {
+  color: green;
+  width: 17.1666666667%;
+}
+
+/*# sourceMappingURL=output.css.map */

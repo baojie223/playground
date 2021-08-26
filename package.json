@@ -1,0 +1,12 @@
+{
+  "name": "my-monorepo",
+  "private": true,
+  "engines": {
+    "node": ">=14.17.0"
+  },
+  "scripts": {
+    "preinstall": "npx only-allow pnpm"
+  },
+  "devDependencies": {},
+  "packageManager": "pnpm@6.24.4"
+}
