@@ -5,8 +5,31 @@
     "node": ">=14.17.0"
   },
   "scripts": {
-    "preinstall": "npx only-allow pnpm"
+    "preinstall": "npx only-allow pnpm",
+    "format": "pnpm exec prettier --write .",
+    "lint": "pnpm exec eslint packages/**/*.{js,ts,tsx} --fix",
+    "stylelint": "pnpm exec stylelint 'packages/**/*.{css,scss}' --fix",
+    "ci:format": "prettier --check ."
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.10.0",
+    "@typescript-eslint/parser": "^5.10.0",
+    "eslint": "^8.7.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-define-config": "^1.2.3",
+    "eslint-plugin-node": "^11.1.0",
+    "husky": "^7.0.4",
+    "lint-staged": "^12.2.1",
+    "prettier": "^2.5.1",
+    "stylelint": "^14.2.0",
+    "stylelint-config-prettier": "^9.0.3",
+    "stylelint-config-standard": "^24.0.0",
+    "typescript": "^4.1.6"
+  },
+  "lint-staged": {
+    "**/*": "prettier --write --ignore-unknown",
+    "packages/**/*.{ts,tsx}": "eslint --ext .ts --fix",
+    "packages/**/*.{css,scss}": "stylelint --fix"
+  },
   "packageManager": "pnpm@6.24.4"
 }

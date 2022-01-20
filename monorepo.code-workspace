@@ -12,5 +12,11 @@
       "name": "monorepo",
       "path": "."
     }
-  ]
+  ],
+  "settings": {
+    "cSpell.words": [
+      "preinstall",
+      "stylelint"
+    ]
+  }
 }
