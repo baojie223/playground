@@ -8,7 +8,7 @@ export default function Counter() {
 
   return (
     <div>
-      Value: {Counter} <button onClick={increment}>Increment</button>
+      Value: {counter} <button onClick={increment}>Increment</button>
     </div>
   )
 }

@@ -2,9 +2,13 @@ const { defineConfig } = require('eslint-define-config')
 
 module.exports = defineConfig({
   root: true,
+  env: {
+    browser: true,
+    node: true
+  },
   extends: [
     'eslint:recommended',
-    'eslint:node',
+    'plugin:node/recommended',
     'plugin:@typescript-eslint/recommended',
     'prettier'
   ],
@@ -13,5 +17,17 @@ module.exports = defineConfig({
     sourceType: 'module',
     ecmaVersion: 2021
   },
-  rules: {}
+  rules: {
+    'no-debugger': 'warn',
+    'node/no-unsupported-features/es-syntax': 'off'
+  },
+  overrides: [
+    {
+      files: ['.eslintrc.js'],
+      rules: {
+        '@typescript-eslint/no-var-requires': 'off',
+        'node/no-unpublished-require': 'off'
+      }
+    }
+  ]
 })

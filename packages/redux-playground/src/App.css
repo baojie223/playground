@@ -9,7 +9,7 @@
 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
-    animation: App-logo-float infinite 3s ease-in-out;
+    animation: app-logo-float infinite 3s ease-in-out;
   }
 }
 
@@ -23,17 +23,19 @@
 }
 
 .App-link {
-  color: rgb(112, 76, 182);
+  color: rgb(112 76 182);
 }
 
-@keyframes App-logo-float {
+@keyframes app-logo-float {
   0% {
     transform: translateY(0);
   }
+
   50% {
     transform: translateY(10px);
   }
+
   100% {
-    transform: translateY(0px);
+    transform: translateY(0);
   }
 }

@@ -29,10 +29,10 @@
   padding-right: 12px;
   outline: none;
   border: 2px solid transparent;
-  color: rgb(112, 76, 182);
+  color: rgb(112 76 182);
   padding-bottom: 4px;
   cursor: pointer;
-  background-color: rgba(112, 76, 182, 0.1);
+  background-color: rgb(112 76 182 / 10%);
   border-radius: 2px;
   transition: all 0.15s;
 }
@@ -47,21 +47,20 @@
 
 .button:hover,
 .button:focus {
-  border: 2px solid rgba(112, 76, 182, 0.4);
+  border: 2px solid rgb(112 76 182 / 40%);
 }
 
 .button:active {
-  background-color: rgba(112, 76, 182, 0.2);
+  background-color: rgb(112 76 182 / 20%);
 }
 
 .asyncButton {
-  composes: button;
   position: relative;
 }
 
-.asyncButton:after {
+.asyncButton::after {
   content: '';
-  background-color: rgba(112, 76, 182, 0.15);
+  background-color: rgb(112 76 182 / 15%);
   display: block;
   position: absolute;
   width: 100%;
@@ -72,7 +71,7 @@
   transition: width 1s linear, opacity 0.5s ease 1s;
 }
 
-.asyncButton:active:after {
+.asyncButton:active::after {
   width: 0%;
   opacity: 1;
   transition: 0s;

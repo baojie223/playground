@@ -1,31 +1,31 @@
 const Vue = {
   createElement,
   render,
-  useState,
-};
+  useState
+}
 
 type VueElement = {
-  type: string;
-  props: { nodeValue?: string; children: VueElement[] };
-};
+  type: string
+  props: { nodeValue?: string; children: VueElement[] }
+}
 
-type FC = (props?: FiberNode["props"]) => VueElement;
+type FC = (props?: FiberNode['props']) => VueElement
 
 type FiberNode = {
-  type?: string | FC;
+  type?: string | FC
   props: {
-    [key: string]: unknown;
-    [key: `on${string}`]: (event?: unknown) => void;
-    children: VueElement[];
-  };
-  dom: HTMLElement | Text;
-  parent?: FiberNode;
-  child?: FiberNode;
-  sibling?: FiberNode;
-  alternate?: FiberNode;
-  effectTag?: "PLACEMENT" | "UPDATE" | "DELETION";
-  hooks?: { state: unknown; queue: [] }[];
-} | null;
+    [key: string]: unknown
+    [key: `on${string}`]: (event?: unknown) => void
+    children: VueElement[]
+  }
+  dom: HTMLElement | Text
+  parent?: FiberNode
+  child?: FiberNode
+  sibling?: FiberNode
+  alternate?: FiberNode
+  effectTag?: 'PLACEMENT' | 'UPDATE' | 'DELETION'
+  hooks?: { state: unknown; queue: [] }[]
+} | null
 
 function createElement(
   type: string,
@@ -37,50 +37,50 @@ function createElement(
     props: {
       ...props,
       children: children.map((child) =>
-        typeof child === "object" ? child : createTextElement(child)
-      ),
-    },
-  };
+        typeof child === 'object' ? child : createTextElement(child)
+      )
+    }
+  }
 }
 
 function createTextElement(text: string): VueElement {
   return {
-    type: "TEXT_ELEMENT",
+    type: 'TEXT_ELEMENT',
     props: {
       nodeValue: text,
-      children: [],
-    },
-  };
+      children: []
+    }
+  }
 }
 
 function createDom(fiber: FiberNode) {
   const dom =
-    fiber.type === "TEXT_ELEMENT"
-      ? document.createTextNode("")
-      : document.createElement(fiber.type as string);
+    fiber.type === 'TEXT_ELEMENT'
+      ? document.createTextNode('')
+      : document.createElement(fiber.type as string)
 
-  const isProperty = (key: string) => key !== "children";
+  const isProperty = (key: string) => key !== 'children'
   Object.keys(fiber.props)
     .filter(isProperty)
     .forEach((key) => {
-      dom[key] = fiber.props[key];
-    });
+      dom[key] = fiber.props[key]
+    })
 
-  return dom;
+  return dom
 }
 
-const isEvent = (key: string) => key.startsWith("on");
-const isProperty = (key: string) => key !== "children" && !isEvent(key);
+const isEvent = (key: string) => key.startsWith('on')
+const isProperty = (key: string) => key !== 'children' && !isEvent(key)
 const isNew =
-  (prev: FiberNode["props"], next: FiberNode["props"]) => (key: string) =>
-    prev[key] !== next[key];
+  (prev: FiberNode['props'], next: FiberNode['props']) => (key: string) =>
+    prev[key] !== next[key]
 const isGone =
-  (prev: FiberNode["props"], next: FiberNode["props"]) => (key: string) =>
-    !(key in next);
+  (prev: FiberNode['props'], next: FiberNode['props']) => (key: string) =>
+    !(key in next)
 function updateDom(
   dom: HTMLElement | Text,
-  prevProps: FiberNode["props"],
-  nextProps: FiberNode["props"]
+  prevProps: FiberNode['props'],
+  nextProps: FiberNode['props']
 ) {
   Object.keys(prevProps)
     .filter(isEvent)
@@ -89,71 +89,71 @@ function updateDom(
         nextProps[key] !== prevProps[key] || isNew(prevProps, nextProps)(key)
     )
     .forEach((name: `on${string}`) => {
-      const eventType = name.toLowerCase().substring(2);
-      dom.removeEventListener(eventType, prevProps[name]);
-    });
+      const eventType = name.toLowerCase().substring(2)
+      dom.removeEventListener(eventType, prevProps[name])
+    })
 
   Object.keys(prevProps)
     .filter(isProperty)
     .filter(isGone(prevProps, nextProps))
     .forEach((name) => {
-      dom[name] = "";
-    });
+      dom[name] = ''
+    })
 
   Object.keys(prevProps)
     .filter(isProperty)
     .filter(isNew(prevProps, nextProps))
     .forEach((name) => {
-      dom[name] = nextProps[name];
-    });
+      dom[name] = nextProps[name]
+    })
 
   Object.keys(prevProps)
     .filter(isEvent)
     .filter(isNew(prevProps, nextProps))
     .forEach((name: `on${string}`) => {
-      const eventType = name.toLowerCase().substring(2);
-      dom.addEventListener(eventType, nextProps[name]);
-    });
+      const eventType = name.toLowerCase().substring(2)
+      dom.addEventListener(eventType, nextProps[name])
+    })
 }
 
 function commitRoot() {
-  deletions.forEach(commitWork);
-  commitWork(wipRoot.child);
-  currentRoot = wipRoot;
-  wipRoot = null;
+  deletions.forEach(commitWork)
+  commitWork(wipRoot.child)
+  currentRoot = wipRoot
+  wipRoot = null
 }
 
 function commitWork(fiber: FiberNode) {
   if (!fiber) {
-    return;
+    return
   }
 
-  let domParentFiber = fiber.parent;
+  let domParentFiber = fiber.parent
   while (!domParentFiber) {
-    domParentFiber = domParentFiber.parent;
+    domParentFiber = domParentFiber.parent
   }
-  const domParent = domParentFiber.dom;
+  const domParent = domParentFiber.dom
 
-  if (fiber.effectTag === "PLACEMENT" && fiber.dom !== null) {
-    domParent.appendChild(fiber.dom);
-  } else if (fiber.effectTag === "UPDATE" && fiber.dom !== null) {
-    updateDom(fiber.dom, fiber.alternate.props, fiber.props);
-  } else if (fiber.effectTag === "DELETION" && fiber.dom !== null) {
-    commitDeletion(fiber, domParent);
+  if (fiber.effectTag === 'PLACEMENT' && fiber.dom !== null) {
+    domParent.appendChild(fiber.dom)
+  } else if (fiber.effectTag === 'UPDATE' && fiber.dom !== null) {
+    updateDom(fiber.dom, fiber.alternate.props, fiber.props)
+  } else if (fiber.effectTag === 'DELETION' && fiber.dom !== null) {
+    commitDeletion(fiber, domParent)
   }
-  if (fiber.effectTag === "UPDATE") {
-    domParent.removeChild(fiber.alternate.dom);
+  if (fiber.effectTag === 'UPDATE') {
+    domParent.removeChild(fiber.alternate.dom)
   }
-  domParent.appendChild(fiber.dom);
-  commitWork(fiber.child);
-  commitWork(fiber.sibling);
+  domParent.appendChild(fiber.dom)
+  commitWork(fiber.child)
+  commitWork(fiber.sibling)
 }
 
 function commitDeletion(fiber: FiberNode, domParent: HTMLElement | Text) {
   if (fiber.dom) {
-    domParent.removeChild(fiber.dom);
+    domParent.removeChild(fiber.dom)
   } else {
-    commitDeletion(fiber.parent, domParent);
+    commitDeletion(fiber.parent, domParent)
   }
 }
 
@@ -161,109 +161,109 @@ function render(element: VueElement, container: HTMLElement | Text) {
   wipRoot = {
     dom: container,
     props: {
-      children: [element],
+      children: [element]
     },
-    alternate: currentRoot,
-  };
-  deletions = [];
-  nextUnitOfWork = wipRoot;
+    alternate: currentRoot
+  }
+  deletions = []
+  nextUnitOfWork = wipRoot
 }
 
-let nextUnitOfWork: FiberNode = null;
-let currentRoot: FiberNode = null;
-let wipRoot: FiberNode = null;
-let deletions: FiberNode[] = [];
+let nextUnitOfWork: FiberNode = null
+let currentRoot: FiberNode = null
+let wipRoot: FiberNode = null
+let deletions: FiberNode[] = []
 
 function workLoop(deadline: IdleDeadline) {
-  let shouldYield = false;
+  let shouldYield = false
   while (nextUnitOfWork && !shouldYield) {
-    nextUnitOfWork = performUnitOfWork(nextUnitOfWork);
-    shouldYield = deadline.timeRemaining() < 1;
+    nextUnitOfWork = performUnitOfWork(nextUnitOfWork)
+    shouldYield = deadline.timeRemaining() < 1
   }
 
   if (!nextUnitOfWork && wipRoot) {
-    commitRoot();
+    commitRoot()
   }
 
-  requestIdleCallback(workLoop);
+  requestIdleCallback(workLoop)
 }
 
 function performUnitOfWork(fiber: FiberNode): FiberNode {
-  const isFunctionComponent = fiber.type instanceof Function;
+  const isFunctionComponent = fiber.type instanceof Function
 
   if (isFunctionComponent) {
-    updateFunctionComponent(fiber);
+    updateFunctionComponent(fiber)
   } else {
-    updateHostComponent(fiber);
+    updateHostComponent(fiber)
   }
 
   if (fiber.child) {
-    return fiber.child;
+    return fiber.child
   }
-  let nextFiber = fiber;
+  let nextFiber = fiber
   while (nextFiber) {
     if (nextFiber.sibling) {
-      return nextFiber.sibling;
+      return nextFiber.sibling
     }
-    nextFiber = nextFiber.parent;
+    nextFiber = nextFiber.parent
   }
 }
 
-let wipFiber: FiberNode = null;
-let hookIndex: number = null;
+let wipFiber: FiberNode = null
+let hookIndex: number = null
 
 function updateFunctionComponent(fiber: FiberNode) {
-  wipFiber = fiber;
-  hookIndex = 0;
-  wipFiber.hooks = [];
-  const children = [(fiber.type as FC)(fiber.props)];
-  reconcileChildren(fiber, children);
+  wipFiber = fiber
+  hookIndex = 0
+  wipFiber.hooks = []
+  const children = [(fiber.type as FC)(fiber.props)]
+  reconcileChildren(fiber, children)
 }
 
 function useState<T = any>(initial: T) {
-  const oldHook = wipFiber?.alternate?.hooks?.[hookIndex];
+  const oldHook = wipFiber?.alternate?.hooks?.[hookIndex]
   const hook = {
     state: oldHook ? oldHook.state : initial,
-    queue: [],
-  };
+    queue: []
+  }
 
-  const actions = oldHook ? oldHook.queue : [];
+  const actions = oldHook ? oldHook.queue : []
   actions.forEach((action) => {
-    hook.state = action(hook.state);
-  });
+    hook.state = action(hook.state)
+  })
 
   const setState = (action) => {
-    hook.queue.push(action);
+    hook.queue.push(action)
     wipRoot = {
       dom: currentRoot?.dom,
       props: currentRoot?.props,
-      alternate: currentRoot,
-    };
-    nextUnitOfWork = wipRoot;
-    deletions = [];
-  };
-  wipFiber?.hooks?.push(hook as any);
-  hookIndex++;
-  return [hook.state, setState] as const;
+      alternate: currentRoot
+    }
+    nextUnitOfWork = wipRoot
+    deletions = []
+  }
+  wipFiber?.hooks?.push(hook as any)
+  hookIndex++
+  return [hook.state, setState] as const
 }
 
 function updateHostComponent(fiber: FiberNode) {
   if (!fiber.dom) {
-    fiber.dom = createDom(fiber);
+    fiber.dom = createDom(fiber)
   }
-  reconcileChildren(fiber, fiber.props.children);
+  reconcileChildren(fiber, fiber.props.children)
 }
 
 function reconcileChildren(wipFiber: FiberNode, elements: VueElement[]) {
-  let index = 0;
-  let oldFiber = wipFiber.alternate && wipFiber.alternate.child;
-  let prevSibling: FiberNode = null;
+  let index = 0
+  const oldFiber = wipFiber.alternate && wipFiber.alternate.child
+  let prevSibling: FiberNode = null
 
   while (index < elements.length || oldFiber !== null) {
-    const element = elements[index];
-    let newFiber: FiberNode = null;
+    const element = elements[index]
+    let newFiber: FiberNode = null
 
-    const sameType = element && oldFiber && element.type === oldFiber.type;
+    const sameType = element && oldFiber && element.type === oldFiber.type
 
     if (sameType) {
       newFiber = {
@@ -272,8 +272,8 @@ function reconcileChildren(wipFiber: FiberNode, elements: VueElement[]) {
         dom: oldFiber.dom,
         parent: wipFiber,
         alternate: oldFiber,
-        effectTag: "UPDATE",
-      };
+        effectTag: 'UPDATE'
+      }
     }
 
     if (element && !sameType) {
@@ -283,35 +283,35 @@ function reconcileChildren(wipFiber: FiberNode, elements: VueElement[]) {
         dom: null,
         parent: wipFiber,
         alternate: null,
-        effectTag: "PLACEMENT",
-      };
+        effectTag: 'PLACEMENT'
+      }
     }
 
     if (!sameType && oldFiber) {
-      oldFiber.effectTag = "DELETION";
-      deletions.push(oldFiber);
+      oldFiber.effectTag = 'DELETION'
+      deletions.push(oldFiber)
     }
 
     if (index === 0) {
-      wipFiber.child = newFiber;
+      wipFiber.child = newFiber
     } else {
-      prevSibling.sibling = newFiber;
+      prevSibling.sibling = newFiber
     }
 
-    prevSibling = newFiber;
-    index++;
+    prevSibling = newFiber
+    index++
   }
 }
 
 window.onload = () => {
   function Counter() {
-    const [state, setState] = Vue.useState(1);
-    return <h1 onClick={() => setState((c) => c + 1)}>Count: {state}</h1>;
+    const [state, setState] = Vue.useState(1)
+    return <h1 onClick={() => setState((c) => c + 1)}>Count: {state}</h1>
   }
-  const element = <Counter />;
-  const container = document.getElementById("root");
-  debugger;
-  Vue.render(element, container);
-};
+  const element = <Counter />
+  const container = document.getElementById('root')
+  debugger
+  Vue.render(element, container)
+}
 
 export default {}
