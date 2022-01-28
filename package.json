@@ -1,5 +1,5 @@
 {
-  "name": "my-monorepo",
+  "name": "my-playground",
   "private": true,
   "engines": {
     "node": ">=14.17.0"
@@ -12,20 +12,20 @@
     "ci:format": "prettier --check ."
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^5.10.0",
-    "@typescript-eslint/parser": "^5.10.0",
+    "@typescript-eslint/eslint-plugin": "^5.10.1",
+    "@typescript-eslint/parser": "^5.10.1",
     "eslint": "^8.7.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-define-config": "^1.2.3",
     "eslint-plugin-node": "^11.1.0",
     "husky": "^7.0.4",
-    "lint-staged": "^12.2.1",
+    "lint-staged": "^12.3.2",
     "prettier": "^2.5.1",
-    "stylelint": "^14.2.0",
+    "stylelint": "^14.3.0",
     "stylelint-config-prettier": "^9.0.3",
     "stylelint-config-standard": "^24.0.0",
     "stylelint-config-standard-scss": "^3.0.0",
-    "typescript": "^4.1.6"
+    "typescript": "^4.5.5"
   },
   "lint-staged": {
     "**/*": "prettier --write --ignore-unknown",

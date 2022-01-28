@@ -9,14 +9,19 @@
       "path": "packages/redux-playground"
     },
     {
-      "name": "monorepo",
+      "name": "blog",
+      "path": "packages/blog"
+    },
+    {
+      "name": "react-vite",
+      "path": "packages/react-vite"
+    },
+    {
+      "name": "my-playground",
       "path": "."
     }
   ],
   "settings": {
-    "cSpell.words": [
-      "preinstall",
-      "stylelint"
-    ]
+    "cSpell.words": ["preinstall", "stylelint"]
   }
 }

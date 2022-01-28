@@ -8,7 +8,6 @@ module.exports = defineConfig({
   },
   extends: [
     'eslint:recommended',
-    'plugin:node/recommended',
     'plugin:@typescript-eslint/recommended',
     'prettier'
   ],
