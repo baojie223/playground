@@ -17,11 +17,19 @@
       "path": "packages/react-vite"
     },
     {
+      "name": "react-webpack",
+      "path": "packages/react-webpack"
+    },
+    {
       "name": "my-playground",
       "path": "."
     }
   ],
   "settings": {
-    "cSpell.words": ["preinstall", "stylelint"]
+    "cSpell.words": [
+      "preinstall",
+      "stylelint"
+    ],
+    "liveServer.settings.multiRootWorkspaceName": "react-webpack"
   }
 }
