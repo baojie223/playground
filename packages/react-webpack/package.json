@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "webpack"
+    "build": "webpack --watch"
   },
   "keywords": [],
   "author": "",
@@ -14,8 +14,10 @@
     "@types/lodash": "^4.14.178",
     "@types/lodash-es": "^4.17.5",
     "browserslist": "^4.19.1",
+    "clean-webpack-plugin": "^4.0.0",
     "css-loader": "^6.5.1",
     "esbuild-loader": "^2.18.0",
+    "fork-ts-checker-webpack-plugin": "^7.2.1",
     "mini-css-extract-plugin": "^2.5.3",
     "sass": "^1.45.1",
     "sass-loader": "^12.4.0",

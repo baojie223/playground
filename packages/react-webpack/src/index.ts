@@ -1,4 +1,7 @@
-import { add } from './utils'
-import './index.scss'
+// import './index.scss'
 
-add(10, 15)
+import(/* webpackPrefetch: true */ './utils').then(({ curriedSum }) => {
+  curriedSum(10, 15)(2)
+})
+
+export {}

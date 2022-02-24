@@ -1,11 +1,13 @@
 import { ESBuildMinifyPlugin } from 'esbuild-loader'
+import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin'
 import MiniCssExtractPlugin from 'mini-css-extract-plugin'
 
 /** @type { import('webpack').Configuration } */
 const config = {
+  // devtool: 'eval-cheap-module-source-map',
   devtool: false,
   entry: './src/index.ts',
-  mode: 'production',
+  mode: 'development',
   module: {
     rules: [
       {
@@ -38,13 +40,18 @@ const config = {
       }
     ]
   },
-  plugins: [new MiniCssExtractPlugin()],
+  plugins: [new MiniCssExtractPlugin(), new ForkTsCheckerWebpackPlugin()],
   resolve: {
     extensions: ['.tsx', '.ts', '.js']
   },
-  optimization: {
-    minimizer: [new ESBuildMinifyPlugin({ target: 'es2015', css: true })]
+  output: {
+    filename: '[name].[hash:8].js',
+    chunkFilename: '[name].[contenthash:8].js',
+    clean: true
   }
+  // optimization: {
+  //   minimizer: [new ESBuildMinifyPlugin({ target: 'es2015', css: true })]
+  // }
 }
 
 export default config
