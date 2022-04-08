@@ -4,10 +4,10 @@ import MiniCssExtractPlugin from 'mini-css-extract-plugin'
 
 /** @type { import('webpack').Configuration } */
 const config = {
-  // devtool: 'eval-cheap-module-source-map',
-  devtool: false,
+  devtool: 'hidden-source-map',
+  // devtool: false,
   entry: './src/index.ts',
-  mode: 'development',
+  mode: 'production',
   module: {
     rules: [
       {

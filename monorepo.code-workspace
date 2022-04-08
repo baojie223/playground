@@ -23,13 +23,18 @@
     {
       "name": "my-playground",
       "path": "."
-    }
+    },
+    {
+      "name": "stupid-ui",
+      "path": "packages/stupid-ui"
+    },
+    {
+      "name": "vue-vite",
+      "path": "packages/vue-vite"
+    },
   ],
   "settings": {
-    "cSpell.words": [
-      "preinstall",
-      "stylelint"
-    ],
+    "cSpell.words": ["preinstall", "stylelint"],
     "liveServer.settings.multiRootWorkspaceName": "react-webpack"
   }
 }

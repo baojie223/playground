@@ -4,9 +4,25 @@ body {
     Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: var(--background-color);
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+:root, html[data-theme='light'] {
+  --background-color: #fff;
+  --text-color: #000;
+}
+
+html[data-theme='dark'] {
+  --background-color: #000;
+  --text-color: #fff;
+}
+
+h1 {
+  color: var(--text-color);
+  transition: all 1s ease;
 }

@@ -1,0 +1,1 @@
+- 打包的时候把devtool设置为hidden-source-map，在发布时，把sourcemap文件上传到对应的地址，然后删除这些文件，当线上发生错误时，把错误url，行号、列号发给sentry，让sentry进行代码反解，依次来定位问题，同时又可以避免源码泄露
